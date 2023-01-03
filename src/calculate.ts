@@ -1,4 +1,4 @@
-import { digits } from './utils/digits';
+import { calculateNumbers } from './main/calculateNumbers';
 
 const prompts = require('prompt');
 const colors = require("@colors/colors/safe");
@@ -14,4 +14,7 @@ const promptProps = {
   }
 }
 
-prompts.get(promptProps, (err, userInput) => digits(userInput.sum, colors));
+prompts.get(promptProps, (err, userInput) => {
+  const result = calculateNumbers(userInput.sum)
+  console.log(`${colors.cyan("The Result is: ")} ${colors.white(result)}`);
+});
