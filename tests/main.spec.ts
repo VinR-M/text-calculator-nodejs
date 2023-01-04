@@ -3,7 +3,7 @@ import { calculate } from '../src/main/calculate'
 describe("When input is empty", () => {
   it("should return an empty string", () => {
     const response = calculate('')
-    expect(response.message).toEqual(undefined);
+    expect(response.result).toEqual('');
   });
 });
 

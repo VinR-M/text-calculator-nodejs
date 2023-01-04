@@ -42,7 +42,7 @@ export const validateAllowedWords = (firstWord: string[], secondWord: string[]):
   if(validateHyphenatedWords(firstWord) && validateHyphenatedWords(secondWord))
     firstValidation = true
 
-  if((!checkIfWordsInArrayExist(firstWord) || !checkIfWordsInArrayExist(secondWord)) && !firstValidation) {
+  if((!checkIfWordsInArrayExist(firstWord) || !checkIfWordsInArrayExist(secondWord)) || !firstValidation) {
     const data: Response = {
       error: true,
       message: 'Please only include Numbers (e.g., "52" or "Fifty-Two" ) and Operator ("+" or "plus").'
