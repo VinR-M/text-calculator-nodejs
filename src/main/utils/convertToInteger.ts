@@ -6,7 +6,7 @@ export const convertToInteger = (writtenNumbers: string[]): number => {
 
       return convertTens(number)
     }
-    else if(writtenNumbers.length == 2 && writtenNumbers[1] === 'hundred') {
+    else if(writtenNumbers.length == 2) {
       return convertHundreds(writtenNumbers)
     } 
     else if(writtenNumbers.length === 3 ) {

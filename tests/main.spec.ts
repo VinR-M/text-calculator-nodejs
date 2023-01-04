@@ -1,19 +1,19 @@
 import { calculate } from '../src/main/calculate'
 
 describe("When input is empty", () => {
-  it("should return undefined", () => {
-    const response = calculate
-    expect(response).toEqual(undefined);
+  it("should return an empty string", () => {
+    const response = calculate('')
+    expect(response.message).toEqual(undefined);
   });
 });
 
-describe.only("when number is out of range", () => {
+describe("when number is out of range", () => {
   it.each`
     invalidInput
-    ${"1000 + 11"}
+    ${"1100 + 11"}
     ${"-1 + 2"}
-    ${"one thousand plus thirty-five"}
-    ${"minus one plus eleven"}
+    ${"eleven hundred plus eleven"}
+    ${"minus one plus two"}
   `("should return an error message for input '$invalidInput'", async ({invalidInput}) => {
     const response = calculate(invalidInput)
     expect(response.message).toEqual(
@@ -22,34 +22,28 @@ describe.only("when number is out of range", () => {
   });
 });
 
-// describe("When input string is invalid", () => {
-//   it.each`
-//     invalidInput
-//     ${"onehundred"}
-//     ${"fortyfour"}
-//     ${"cincuenta uno"}
-//   `(
-//     "should return an error message for '$invalidInput'",
-//     async invalidInput => {
-//       const { stdout } = await exec(`./calculate "${invalidInput}"`);
-//       expect(stdout).toEqual(expect.stringContaining("invalid string"));
-//     }
-//   );
-// });
+describe("When input string is invalid", () => {
+  it.each`
+    invalidInput
+    ${"onehundred plus one"}
+    ${"fortyfour plus two"}
+  `(
+    "should return an error message for '$invalidInput'",
+    async ({invalidInput}) => {
+      const response = calculate(invalidInput)
+      expect(response.message).toEqual(expect.stringContaining('Please only include Numbers (e.g., "52" or "Fifty-Two" ) and Operator ("+" or "plus").'));
+    }
+  );
+});
 
-// describe("when input is valid", () => {
-//   it.each`
-//     input                                   | result
-//     ${"5"}                                  | ${"5"}
-//     ${"0 + 1"}                              | ${"1"}
-//     ${"five"}                               | ${"five"}
-//     ${"zero plus one"}                      | ${"one"}
-//     ${"nine hundred ninety-eight plus one"} | ${"nine hundred ninety-nine"}
-//     ${"cinco"}                              | ${"cinco"}
-//     ${"cero mas uno"}                       | ${"uno"}
-//     ${"novecientos noventa y ocho mas uno"} | ${"novecientos noventa y nueve"}
-//   `("should return '$result' for '$input'", async ({ input, result }) => {
-//     const { stdout } = await exec(`./calculate "${input}"`);
-//     expect(stdout).toEqual(expect.stringContaining(result));
-//   });
-// });
+describe("when input is valid", () => {
+  it.each`
+    input                                   | result
+    ${"0 + 1"}                              | ${1}
+    ${"zero plus one"}                      | ${"One"}
+    ${"nine hundred ninety-eight plus one"} | ${"Nine Hundred Ninety Nine"}
+  `("should return '$result' for '$input'", async ({ input, result }) => {
+    const response = calculate(input)
+    expect(response.result).toEqual(result);
+  });
+});

@@ -1,15 +1,27 @@
 import { handleWords } from './handleWords'
 import { Response } from './models'
-import { validateRange } from './validations'
+import { validateNegativeNumber, validateOperator, validateRange } from './validations'
 
 export const calculate = (userInput: string): Response => {
-  const inputItems = userInput.split(' ')
+  if (userInput === '') 
+    return { error: false, result: ''}
+
+  const operatorValidation = validateOperator(userInput)
+  if (operatorValidation?.error)
+    return operatorValidation
+
+  const normalizedInput = userInput.toLowerCase() 
+
+  const negativeNumberValidation = validateNegativeNumber(normalizedInput)
+  if (negativeNumberValidation?.error)
+    return negativeNumberValidation
+
+  const inputItems = normalizedInput.split(' ')
+
   const firstNumber = parseInt(inputItems[0])
   const secondNumber = parseInt(inputItems[2])
 
   const result = firstNumber + secondNumber
-
-  console.log(userInput)
 
   if(!isNaN(result)) {
     const validation = validateRange(firstNumber, secondNumber)

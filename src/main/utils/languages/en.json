@@ -33,6 +33,7 @@
     "ninety": 90
   },
   "units" : {
-    "hundred": 100
+    "hundred": 100,
+    "thousand": 1000
   }
 }

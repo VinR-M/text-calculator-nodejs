@@ -1,9 +1,5 @@
-export interface Data {
+export interface Response {
   error: Boolean,
   result?: string | number,
   message?: string,
-}
-
-export interface Response extends Data {
-  language?: 'en' | 'fr'
 }
