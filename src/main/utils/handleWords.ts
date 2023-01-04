@@ -1,6 +1,6 @@
 import { convertToInteger } from './convertToInteger'
 
-export const handleWords = (inputItems) => {
+export const handleWords = (inputItems: string[]): number => {
   const totalWords = inputItems.length
   const operatorPosition = inputItems.indexOf('plus')
 
