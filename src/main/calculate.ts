@@ -25,7 +25,6 @@ export const calculate = (userInput: string): Response => {
 
   if(!isNaN(result)) {
     const validation = validateRange(firstNumber, secondNumber)
-
     if(validation?.error) 
       return validation
 

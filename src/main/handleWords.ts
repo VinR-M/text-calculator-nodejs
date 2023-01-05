@@ -21,7 +21,6 @@ export const handleWords = (inputItems: string[]): Response => {
   const convertedResult = toWords.convert(convertedFirstNumber + convertedSecondNumber)
 
   const validation = validateRange(convertedFirstNumber, convertedSecondNumber)
-
     if(validation?.error) 
       return validation
 

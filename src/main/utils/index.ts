@@ -6,6 +6,10 @@ export const convertHyphenatedNumbers = (hyphenatedNumber: string): number => {
   return en.base[separatedNumber[0]] + en.base[separatedNumber[1]]
 }
 
+export const convertNonHyphenatedNumbers = (nonHyphenatedNumbers : string[]): number => {
+  return en.base[nonHyphenatedNumbers[0]] + en.base[nonHyphenatedNumbers[1]]
+}
+
 export const convertTens = (number: string): number => {
   if(number.includes('-')) {
     return convertHyphenatedNumbers(number)
