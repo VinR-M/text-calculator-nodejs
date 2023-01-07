@@ -3,3 +3,9 @@ export interface Response {
   result?: string | number,
   message?: string,
 }
+
+export type language = 'en' | 'es'
+export interface LanguageSetting {
+  language: language,
+  operatorPosition: number
+}

@@ -1,23 +1,16 @@
-import * as en from '../utils/languages/en.json'
+import { language, LanguageSetting } from '../models'
 
-export const convertHyphenatedNumbers = (hyphenatedNumber: string): number => {
-  const separatedNumber = hyphenatedNumber.split('-')
 
-  return en.base[separatedNumber[0]] + en.base[separatedNumber[1]]
-}
+export const defineLanguage = (inputItems: string[]): LanguageSetting => {
+  let operatorPosition: number
+  let language: language = 'en'
 
-export const convertNonHyphenatedNumbers = (nonHyphenatedNumbers : string[]): number => {
-  return en.base[nonHyphenatedNumbers[0]] + en.base[nonHyphenatedNumbers[1]]
-}
-
-export const convertTens = (number: string): number => {
-  if(number.includes('-')) {
-    return convertHyphenatedNumbers(number)
+  if(inputItems.indexOf('plus') !== -1) 
+    operatorPosition = inputItems.indexOf('plus')
+  else {
+    operatorPosition = inputItems.indexOf('mas')
+    language = 'es'
   }
 
-  return en.base[number]
-}
-
-export const convertHundreds = (number: string[]): number => {
-  return en.base[number[0]] * en.units[number[1]]
+  return { operatorPosition, language }
 }

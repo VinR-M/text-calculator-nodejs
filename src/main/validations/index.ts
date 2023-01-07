@@ -1,5 +1,6 @@
-import { Response } from '../models'
-import { checkIfWordExists, checkIfWordsInArrayExist } from './utils'
+import { language, Response } from '../models'
+import { checkIfWordExistsEN, checkIfWordsInArrayExistEN } from './utils/checkEnglishWords'
+import { checkIfWordsInArrayExistES } from './utils/checkSpanishWords'
 
 
 export const validateRange = (firstNumber: number, secondNumber: number): Response => {
@@ -14,7 +15,7 @@ export const validateRange = (firstNumber: number, secondNumber: number): Respon
 }
 
 export const validateNegativeNumber = (userInput :string): Response => {
-  if(userInput.includes('minus')) {
+  if(userInput.includes('minus') || userInput.includes('menos')) {
     const data: Response = {
       error: true,
       message: 'Please use only numbers between 0 and 999.'
@@ -25,7 +26,7 @@ export const validateNegativeNumber = (userInput :string): Response => {
 }
 
 export const validateOperator = (userInput :string): Response => {
-  if(!userInput.includes('+') && !userInput.includes('plus')) {
+  if(!userInput.includes('+') && !userInput.includes('plus') && !userInput.includes('mas')) {
     const data: Response = {
       error: true,
       message: 'Please include Operator ("+" or "plus").'
@@ -36,16 +37,28 @@ export const validateOperator = (userInput :string): Response => {
 }
 
 
-export const validateAllowedWords = (firstWord: string[], secondWord: string[]): Response => {
+export const validateAllowedEnglishWords = (firstWord: string[], secondWord: string[]): Response => {
   let firstValidation = false
 
   if(validateHyphenatedWords(firstWord) && validateHyphenatedWords(secondWord))
     firstValidation = true
 
-  if((!checkIfWordsInArrayExist(firstWord) || !checkIfWordsInArrayExist(secondWord)) || !firstValidation) {
+  if((!checkIfWordsInArrayExistEN(firstWord) || !checkIfWordsInArrayExistEN(secondWord)) || !firstValidation) {
     const data: Response = {
       error: true,
       message: 'Please only include Numbers (e.g., "52" or "Fifty-Two" ) and Operator ("+" or "plus").'
+    }
+  
+    return data
+  }
+}
+
+export const validateAllowedSpanishWords = (firstWord: string[], secondWord: string[]): Response => {
+
+  if(!checkIfWordsInArrayExistES(firstWord) || !checkIfWordsInArrayExistES(secondWord)) {
+    const data: Response = {
+      error: true,
+      message: 'Please only include Numbers (e.g., "52" or "Cincuenta y Dos" ) and Operator ("+" or "mas").'
     }
   
     return data
@@ -58,8 +71,8 @@ export const validateHyphenatedWords = (hyphenatedWords: string[]) => {
     if(word.includes('-')) {
       const separatedNumber = word.split('-')
 
-      const wordOneExists = checkIfWordExists(separatedNumber[0])
-      const wordTwoExists = checkIfWordExists(separatedNumber[1])
+      const wordOneExists = checkIfWordExistsEN(separatedNumber[0])
+      const wordTwoExists = checkIfWordExistsEN(separatedNumber[1])
 
       if(!wordOneExists || !wordTwoExists) {
         wordExists = false
